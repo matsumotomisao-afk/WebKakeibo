@@ -49,7 +49,7 @@ namespace WebKakeibo.Controllers
         // GET: Payments/Create
         public IActionResult Create()
         {
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "ImageUrl");
+            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -67,7 +67,7 @@ namespace WebKakeibo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "ImageUrl", payment.SubjectNameId);
+            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name", payment.SubjectNameId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", payment.UserId);
             return View(payment);
         }
@@ -85,7 +85,7 @@ namespace WebKakeibo.Controllers
             {
                 return NotFound();
             }
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "ImageUrl", payment.SubjectNameId);
+            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name", payment.SubjectNameId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", payment.UserId);
             return View(payment);
         }
@@ -122,7 +122,7 @@ namespace WebKakeibo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "ImageUrl", payment.SubjectNameId);
+            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name", payment.SubjectNameId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", payment.UserId);
             return View(payment);
         }
