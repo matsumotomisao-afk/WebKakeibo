@@ -36,16 +36,22 @@
             @Html.DisplayFor(model => model.PaymentType)
         </dd>
         <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PaymentTypeNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PaymentTypeNavigation.TypeName)
+        </dd>
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Amount)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Amount)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SubjectName)
+            @Html.DisplayNameFor(model => model.SubjectNameNavigation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SubjectName.ImageUrl)
+            @Html.DisplayFor(model => model.SubjectNameNavigation.ImageUrl)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.User)

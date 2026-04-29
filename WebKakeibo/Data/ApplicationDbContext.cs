@@ -9,5 +9,6 @@ namespace WebKakeibo.Data
         public DbSet<WebKakeibo.Models.MonthlyBudget> MonthlyBudget { get; set; } = default!;
         public DbSet<WebKakeibo.Models.Payment> Payment { get; set; } = default!;
         public DbSet<WebKakeibo.Models.SubjectName> SubjectName { get; set; } = default!;
+        public DbSet<WebKakeibo.Models.PaymentType> PaymentType { get; set; } = default!;
     }
 }

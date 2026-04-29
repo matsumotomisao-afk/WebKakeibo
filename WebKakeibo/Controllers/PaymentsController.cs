@@ -22,7 +22,7 @@ namespace WebKakeibo.Controllers
         // GET: Payments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Payment.Include(p => p.SubjectName).Include(p => p.User);
+            var applicationDbContext = _context.Payment.Include(p => p.PaymentTypeNavigation).Include(p => p.SubjectNameNavigation).Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -35,7 +35,8 @@ namespace WebKakeibo.Controllers
             }
 
             var payment = await _context.Payment
-                .Include(p => p.SubjectName)
+                .Include(p => p.PaymentTypeNavigation)
+                .Include(p => p.SubjectNameNavigation)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payment == null)
@@ -49,7 +50,8 @@ namespace WebKakeibo.Controllers
         // GET: Payments/Create
         public IActionResult Create()
         {
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name");
+            ViewData["PaymentTypeId"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeId", "TypeName");
+            ViewData["SubjectNameId"] = new SelectList(_context.SubjectName, "SubjectNameId", "Name");
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
@@ -59,7 +61,7 @@ namespace WebKakeibo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaymentId,Posted,ItemName,PaymentName,PaymentType,Amount,SubjectNameId,UserId")] Payment payment)
+        public async Task<IActionResult> Create([Bind("PaymentId,Posted,ItemName,PaymentName,PaymentType,PaymentTypeId,Amount,SubjectNameId,UserId")] Payment payment)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +69,8 @@ namespace WebKakeibo.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name", payment.SubjectNameId);
+            ViewData["PaymentTypeId"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeId", "TypeName", payment.PaymentTypeId);
+            ViewData["SubjectNameId"] = new SelectList(_context.SubjectName, "SubjectNameId", "Name", payment.SubjectNameId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", payment.UserId);
             return View(payment);
         }
@@ -85,7 +88,8 @@ namespace WebKakeibo.Controllers
             {
                 return NotFound();
             }
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name", payment.SubjectNameId);
+            ViewData["PaymentTypeId"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeId", "TypeName", payment.PaymentTypeId);
+            ViewData["SubjectNameId"] = new SelectList(_context.SubjectName, "SubjectNameId", "Name", payment.SubjectNameId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", payment.UserId);
             return View(payment);
         }
@@ -95,7 +99,7 @@ namespace WebKakeibo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,Posted,ItemName,PaymentName,PaymentType,Amount,SubjectNameId,UserId")] Payment payment)
+        public async Task<IActionResult> Edit(int id, [Bind("PaymentId,Posted,ItemName,PaymentName,PaymentType,PaymentTypeId,Amount,SubjectNameId,UserId")] Payment payment)
         {
             if (id != payment.PaymentId)
             {
@@ -122,7 +126,8 @@ namespace WebKakeibo.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SubjectNameId"] = new SelectList(_context.Set<SubjectName>(), "SubjectNameId", "Name", payment.SubjectNameId);
+            ViewData["PaymentTypeId"] = new SelectList(_context.Set<PaymentType>(), "PaymentTypeId", "TypeName", payment.PaymentTypeId);
+            ViewData["SubjectNameId"] = new SelectList(_context.SubjectName, "SubjectNameId", "Name", payment.SubjectNameId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", payment.UserId);
             return View(payment);
         }
@@ -136,7 +141,8 @@ namespace WebKakeibo.Controllers
             }
 
             var payment = await _context.Payment
-                .Include(p => p.SubjectName)
+                .Include(p => p.PaymentTypeNavigation)
+                .Include(p => p.SubjectNameNavigation)
                 .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.PaymentId == id);
             if (payment == null)

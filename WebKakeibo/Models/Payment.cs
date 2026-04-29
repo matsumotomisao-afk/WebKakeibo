@@ -20,12 +20,15 @@ namespace WebKakeibo.Models
         [Required]
         [Display(Name = "支払方法")]
         public string PaymentType { get; set; } = string.Empty;  // 例：現金、クレジットカード、電子マネーなど
+        public int PaymentTypeId { get; set; }  // PaymentType クラス（テーブル）とリレーションシップを構築
+        public PaymentType? PaymentTypeNavigation { get; set; }  // Navigationプロパティ
         [Required]
         [Display(Name = "金額")]
         public int Amount { get; set; }
         [Display(Name = "カテゴリ-")]
         public int SubjectNameId { get; set; }  // SubjectName クラス（テーブル）とリレーションシップを構築
-        public SubjectName? SubjectName { get; set; }  // Navigationプロパティ
+        public SubjectName? SubjectNameNavigation { get; set; } // Navigationプロパティ
+
         [Required]
         public string? UserId { get; set; }          // IdentityUser クラス（テーブル）とリレーションシップを構築
         [ForeignKey("UserId")]                      // UserId プロパティを外部キーとして指定

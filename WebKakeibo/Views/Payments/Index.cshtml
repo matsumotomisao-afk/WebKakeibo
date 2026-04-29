@@ -25,10 +25,13 @@
                 @Html.DisplayNameFor(model => model.PaymentType)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.PaymentTypeNavigation)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SubjectName)
+                @Html.DisplayNameFor(model => model.SubjectNameNavigation)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.User)
@@ -52,10 +55,13 @@
                 @Html.DisplayFor(modelItem => item.PaymentType)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.PaymentTypeNavigation.TypeName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SubjectName.ImageUrl)
+                @Html.DisplayFor(modelItem => item.SubjectNameNavigation.ImageUrl)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Id)
