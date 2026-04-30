@@ -33,7 +33,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var paymentType = await _context.PaymentType
+            PaymentType? paymentType = await _context.PaymentType
                 .FirstOrDefaultAsync(m => m.PaymentTypeId == id);
             if (paymentType == null)
             {
@@ -73,7 +73,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var paymentType = await _context.PaymentType.FindAsync(id);
+            PaymentType? paymentType = await _context.PaymentType.FindAsync(id);
             if (paymentType == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var paymentType = await _context.PaymentType
+            PaymentType? paymentType = await _context.PaymentType
                 .FirstOrDefaultAsync(m => m.PaymentTypeId == id);
             if (paymentType == null)
             {
@@ -139,7 +139,7 @@ namespace WebKakeibo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paymentType = await _context.PaymentType.FindAsync(id);
+            PaymentType? paymentType = await _context.PaymentType.FindAsync(id);
             if (paymentType != null)
             {
                 _context.PaymentType.Remove(paymentType);

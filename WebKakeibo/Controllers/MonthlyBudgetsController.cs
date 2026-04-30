@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using WebKakeibo.Data;
 using WebKakeibo.Models;
 
@@ -22,7 +24,7 @@ namespace WebKakeibo.Controllers
         // GET: MonthlyBudgets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.MonthlyBudget.Include(m => m.User);
+            IIncludableQueryable<MonthlyBudget, IdentityUser?> applicationDbContext = _context.MonthlyBudget.Include(m => m.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +36,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var monthlyBudget = await _context.MonthlyBudget
+            MonthlyBudget? monthlyBudget = await _context.MonthlyBudget
                 .Include(m => m.User)
                 .FirstOrDefaultAsync(m => m.MonthlyBudgetId == id);
             if (monthlyBudget == null)
@@ -77,7 +79,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var monthlyBudget = await _context.MonthlyBudget.FindAsync(id);
+            MonthlyBudget? monthlyBudget = await _context.MonthlyBudget.FindAsync(id);
             if (monthlyBudget == null)
             {
                 return NotFound();
@@ -130,7 +132,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var monthlyBudget = await _context.MonthlyBudget
+            MonthlyBudget? monthlyBudget = await _context.MonthlyBudget
                 .Include(m => m.User)
                 .FirstOrDefaultAsync(m => m.MonthlyBudgetId == id);
             if (monthlyBudget == null)
@@ -146,7 +148,7 @@ namespace WebKakeibo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var monthlyBudget = await _context.MonthlyBudget.FindAsync(id);
+            MonthlyBudget? monthlyBudget = await _context.MonthlyBudget.FindAsync(id);
             if (monthlyBudget != null)
             {
                 _context.MonthlyBudget.Remove(monthlyBudget);

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using WebKakeibo.Data;
 using WebKakeibo.Models;
 
@@ -22,7 +24,7 @@ namespace WebKakeibo.Controllers
         // GET: Payments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Payment.Include(p => p.PaymentTypeNavigation).Include(p => p.SubjectNameNavigation).Include(p => p.User);
+            IIncludableQueryable<Payment, IdentityUser?> applicationDbContext = _context.Payment.Include(p => p.PaymentTypeNavigation).Include(p => p.SubjectNameNavigation).Include(p => p.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +36,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var payment = await _context.Payment
+            Payment? payment = await _context.Payment
                 .Include(p => p.PaymentTypeNavigation)
                 .Include(p => p.SubjectNameNavigation)
                 .Include(p => p.User)
@@ -83,7 +85,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var payment = await _context.Payment.FindAsync(id);
+            Payment? payment = await _context.Payment.FindAsync(id);
             if (payment == null)
             {
                 return NotFound();
@@ -140,7 +142,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var payment = await _context.Payment
+            Payment? payment = await _context.Payment
                 .Include(p => p.PaymentTypeNavigation)
                 .Include(p => p.SubjectNameNavigation)
                 .Include(p => p.User)
@@ -158,7 +160,7 @@ namespace WebKakeibo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var payment = await _context.Payment.FindAsync(id);
+            Payment? payment = await _context.Payment.FindAsync(id);
             if (payment != null)
             {
                 _context.Payment.Remove(payment);

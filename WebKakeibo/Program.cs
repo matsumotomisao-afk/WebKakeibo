@@ -16,6 +16,16 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// アプリ起動時に画像登録
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate(); 　　　　　　　// マイグレーション適用
+    db.SeedImagesFromWwwroot(); 　　　// 画像登録
+}
+
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

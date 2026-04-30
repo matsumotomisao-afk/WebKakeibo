@@ -33,7 +33,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var subjectName = await _context.SubjectName
+            SubjectName? subjectName = await _context.SubjectName
                 .FirstOrDefaultAsync(m => m.SubjectNameId == id);
             if (subjectName == null)
             {
@@ -73,7 +73,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var subjectName = await _context.SubjectName.FindAsync(id);
+            SubjectName? subjectName = await _context.SubjectName.FindAsync(id);
             if (subjectName == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace WebKakeibo.Controllers
                 return NotFound();
             }
 
-            var subjectName = await _context.SubjectName
+            SubjectName? subjectName = await _context.SubjectName
                 .FirstOrDefaultAsync(m => m.SubjectNameId == id);
             if (subjectName == null)
             {
@@ -139,7 +139,7 @@ namespace WebKakeibo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var subjectName = await _context.SubjectName.FindAsync(id);
+            SubjectName? subjectName = await _context.SubjectName.FindAsync(id);
             if (subjectName != null)
             {
                 _context.SubjectName.Remove(subjectName);
